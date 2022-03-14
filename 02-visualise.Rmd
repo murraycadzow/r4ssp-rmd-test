@@ -26,13 +26,14 @@ Readings:
 
 # Tabular Data
 In this module we begin to work with complete tables of data, and learn how to make informative graphs. 
-We begin by getting our scientific research data into RStudio. Commonly, we first enter our data into Excel for cleaning and organising, and save it out as a csv (comma separated values) file. We then import the file into R for data analysis.   We will provide the csv file to be used with this document.
 
-Note that in this document we are using Base R (the R functions that are automatically available in RStudio). These Base R functions are simple to work with, and are a good way to get familiar with R. In later modules, we will meet some more sophisticated R tools which, while more complicated, can also be more efficient.
+We will start by getting our scientific research data into RStudio. Commonly, we first enter our data into Excel for cleaning and organising, and save it out as a csv (comma separated values) file. We then import the file into R for data analysis. We will provide the csv file to be used with this module.
 
-Work carefully through each of the sections below, confirming that all your outputs match ours. When you feel completely comfortable with the content, move on to R for Data Science: Data Visualisation (https://r4ds.had.co.nz/data-visualisation.html) which covers advanced plotting with the ggplot library.
+Note that in this document we are primarily using Base R (the R functions that are automatically available in RStudio). These Base R functions are simple to work with, and are a good way to get familiar with R. In later modules, we will meet some more sophisticated R tools which, while more complicated, can also be more efficient.
 
-When you have completed this module, you should be ready to produce the graphs and figures you will need for your in-course research projects. If you run into any problems or have any questions, email us, and/or come to the drop-in session Monday 10.00 to 12.00 in the Science Library Seminar Room.
+Work carefully through each of the sections below, confirming that all your outputs match ours. When you feel completely comfortable with the content, we recommend moving on to Section 3 of R for Data Science: Data Visualisation (https://r4ds.had.co.nz/data-visualisation.html) which covers advanced plotting with the ggplot library.
+
+When you have completed this module, you should be ready to produce the graphs and figures you will need for your in-course research projects. If you run into any problems or have any questions, email us, or drop us a message in the R4SSP class team on MS Teams.
 
 
 ## Preparation - Do this very carefully
@@ -41,7 +42,7 @@ Document organisation is vitally important. We suggest that you keep a separate 
 
 1. Launch R Studio
 
-2. Following the procedure from **Using a Script File** in Module 2 - Get Started with R, create a script file and save it to your desktop or other location where you will be able to find it.
+2. Following the procedure from **Using a Script File** in Module 1 - Intro to R and RStudio, create a script file and save it to your desktop or other location where you will be able to find it.
 
 3. Quit R Studio
 
@@ -60,14 +61,14 @@ If you set things up this way, RStudio will be able to find your data file for t
 The provided file **r4ssp_donations_data.csv** contains the (fictitious) results of a study designed to explore the factors which affect donations to street-corner charity collectors. Fifty student researchers each spent four hours at one of 50 randomly selected positions on George Street, collecting donations for *Blind Low Vision NZ Guide Dogs*, an organisation that raises and trains service dogs. Twenty-five of the collectors were accompanied by guide dog puppies; the other 25 were alone. Assignment to the Puppy or Alone conditions was done randomly. Each researcher recorded the total amount of money collected during their four hour shift. The start of the data file is shown below.
 
 ```{r, fig.align='center', out.width = "50%", fig.cap = "Donations - Puppy or Alone", fig.pos = "H", echo = FALSE}
-include_graphics("images/donations_puppy.png")
+include_graphics("docs/images/donations_puppy.png")
 ```
 
 
 
 We will import this file into R for some preliminary data analysis.
 
-To import a csv file into R we can use the function `read_csv`. Like the R functions we used in Module 2, `read_csv` accepts an argument between its round brackets. The argument is the name of the input file. Because the name of the file is a string, we surround it with double quotes. We will therefore say:
+To import a csv file into R we can use the function `read_csv`. Like the R functions we used in Module 1, `read_csv` accepts an argument between its round brackets. The argument is the name of the input file. Because the name of the file is a string, we surround it with double quotes. We will therefore say:
 
 `read_csv("r4ssp_donations_data.csv")`
 
@@ -85,7 +86,7 @@ Type the following lines into your script file. Execute your commands as you did
 
 ```{r read_csv}
 library(readr)
-read_csv("data/r4ssp_donations_data.csv")
+read_csv("r4ssp_donations_data.csv")
 ```
 
 NB: When you try to execute this code, you may receive an error message: *Error in library(readr) : there is no package called ‘readr’*. If this happens it means that the functions in library readr have not yet been installed on your computer. Please see **Appendix 2 - Installing Packages** at the end of this handout for instructions.
@@ -102,7 +103,7 @@ This is a good moment to pause and check that your data have been imported corre
 
 You will often also see files imported with the function `read.csv` (note the . instead of the _ ). This is the base R function for importing files. To use `read.csv` you don't need to load a library first, but R doesn't generate any information about how it has parsed the data in the columns. You can use the function `str` to get this information. Google for details.
 
-With both `read_csv` and `read.csv` R will import the file and display its contents in the console, but this is not quite enough. We want R to store the data in a named variable so that we can refer to it later (i.e., do analyses on it). We do that with the assignment operator, as we did in our previous module. For example, we can say:
+With both `read_csv` and `read.csv` R will import the file and display its contents in the console, but this is not quite enough. We want R to store the data in a named variable so that we can refer to it later (i.e., perform analyses on it). We do that with the assignment operator, as we did in our previous module. For example, we can say:
 
 `puppy_donations_data <- read_csv("r4ssp_donations_data.csv")`
 
@@ -115,7 +116,7 @@ Enter and run these commands:
 library(readr)
 
 # Read a csv file into R. Store the result in a named variable
-puppy_donations_data <- read_csv("data/r4ssp_donations_data.csv")
+puppy_donations_data <- read_csv("r4ssp_donations_data.csv")
 
 # As always in R, we can display the contents of a variable by simply typing its name.
 puppy_donations_data
@@ -154,11 +155,13 @@ First, let's plot a histogram of the amounts collected, (ignoring the Puppy/Alon
 ```{r handout2_hist}
 hist(amount_only)
 ```
+
 Our data appear to be bimodal (i.e. they have two peaks). This pattern can indicate the presence of distinct groups in a data set, an informative result in this study. 
 
 
 ### Simple numeric descriptive statistics
-We can also generate some useful numeric summaries:
+We can compute some useful descriptive statistics using Base R built-in functions:
+
 ```{r someStats}
 # Compute the mathematical mean with function mean()
 mean(amount_only)
@@ -235,7 +238,7 @@ We can see that the mean amount is higher for collectors who had puppies than fo
 
 The R function `boxplot` accepts two arguments. 
 
-The first argument is the **formula**. This is a complex, yet very common, argument format for R statistical functions. The formula describes a linear model for a data set with the general structure: **dependent or predicted variable ~ independent variables or predictors**, using columns names from the data frame. The ~ (tilda) is read as "depends on" or "is predicted by". For our example, we are interested in the way that Amount is dependent on the Puppy/Alone condition, so we specify our formula as **Amount ~ Condition**.  We will see more complex examples of the formula argument later in the semester.
+The first argument is the **formula**. This is a complex, yet very common argument format for R statistical functions. The formula describes a linear model for a data set with the general structure: **dependent or predicted variable ~ independent variables or predictors**, using columns names from the data frame. The ~ (tilda) is read as "depends on" or "is predicted by". For our example, we are interested in the way that Amount is dependent on the Puppy/Alone condition, so we specify our formula as **Amount ~ Condition**.  We will see more complex examples of the formula argument later in the semester.
 
 The second argument to boxplot is the data frame.
 
@@ -244,25 +247,20 @@ boxplot(Amount ~ Condition, puppy_donations_data)
 ```
 
 
-Boxplots efficiently illustrate both the central tendency and the variability of a data set. Each grey box extends from the first quartile to the third quartile of its input values. The dark line across the box is at the median. The two thin lines outside the qrey box show the values of the minimum and maximum scores, excluding extreme outliers. If extreme outliers are present, they are shown as asterisks.
+Boxplots efficiently illustrate both the central tendency and the variability of a data set. Each grey box extends from the first quartile to the third quartile of its input values. The dark line across the box is at the median. The two thin lines outside the qrey box show the values of the minimum and maximum scores, excluding extreme outliers. If extreme outliers are present, they are shown as small circles.
 
-The `boxplot` function actually has many optional arguments for things like adding legends and formatting plot axes, and calls to this function can get quite elaborate. Because of this, it is common to see the function called with its arguments named (as with stringsAsFactors, above). For example:
-
-```{r handout2_boxplot02}
-boxplot(formula = Amount ~ Condition, data = puppy_donations_data)
-```
 
 ## Some more R Markdown
 Let's look more closely at how you can use R Markdown to generate well-formatted research reports.
 
-1\. Following the procedure described in Handout 2 - Get Started with R, create an R Markdown file
+1\. Following the procedure described in Handout 1 - Introducing R and RStudio, create an R Markdown file
 
 2\. The new file contains some template text. In the *second shaded block* replace the command `summary(cars)` with some of the code you have just written. Be careful not to delete either of the lines that begin with ```. Those symbols signal to RStudio that the contents is R code, not text. 
 
 For example, I made this replacement:
 
 ```{r, fig.align='center', out.width = "50%", fig.cap = "Replace the template code with yours", fig.pos = "H", echo = FALSE}
-include_graphics("images/markdown_replace_code.png")
+include_graphics("docs/images/markdown_replace_code.png")
 ```
 
 3\. You might also want to replace some of the text (in the non-shaded areas), to match your new code. 
@@ -273,25 +271,25 @@ include_graphics("images/markdown_replace_code.png")
 
 ## Exercise - R Markdown
 1. Figure out how to generate a Word document with R Markdown (Hint: look at the dropdown list beside the Knit button, by clicking the small triangle).
-2. Some lines in the text areas of the R Markdown template start with ##, and the text is coloured Blue. What does the ## do? What do you think prefacing a line of text with ### would do? Test your theory.
+2. Some lines in the text areas of the R Markdown template start with ##, and the text is coloured blue. What does the ## do? What do you think prefacing a line of text with ### would do? Test your theory.
 
 
 # Conclusion
-This document has presented a simple introduction to working with complete tables of data in R. We learned how to import a csv file into a data frame, how to select columns and rows of interest from the data frame, and how to perform simple, yet illustrative summaries on them. We have covered only a tiny fraction of the data analyses you can perform with R and RStudio. You can also do very complex statistics like ANOVA, regression, factor analysis, and complex modeling. The specific statistical analyses you will need to do for your in-course assignments will depend on the papers you are taking, but you can be confident that whatever your lecturers require can almost certainly by done efficiently in R. As we proceed through the semester, if you wish to discuss a particular data analysis, processing, or presentation task, please let us know.
+This module has presented a simple introduction to working with complete tables of data in R. We learned how to import a csv file into a data frame, how to select columns and rows of interest from the data frame, and how to perform simple, yet illustrative summaries on them. We have covered only a tiny fraction of the data analyses you can perform with R and RStudio. You can also do very complex statistics like ANOVA, regression, factor analysis, and complex modeling. The specific statistical analyses you will need to do for your in-course assignments will depend on the papers you are taking, but you can be confident that whatever your lecturers require can almost certainly by done efficiently in R. As we proceed through the semester, if you wish to discuss a particular data analysis, processing, or presentation task, please let us know.
 
 
 ## What's Next
 
 Fill in the module feedback form [https://tinyurl.com/r4ssp-module-fb](https://tinyurl.com/r4ssp-module-fb).
 
-Ensure you have the `tidyverse` package installed. Refer to Appendix 2, or [https://r4ds.had.co.nz/introduction.html](https://r4ds.had.co.nz/introduction.html) for how to do this.
+Ensure you have the `tidyverse` package installed. We will be using this package in our next module. Refer to Appendix 2 below for detailed package installation instructions..
  
-Next, move onto Section 3 - Data Visualisation in the online text "R for Data Science" (https://r4ds.had.co.nz/data-visualisation.html). This material covers **ggplot**, the industry-standard graphics package for R. Be prepared: The ggplot syntax is probably different from anything you have used before, and it can take a little getting used to. But be patient, because with ggplot you can produce publication-quality plots and figures that will definitely enhance your own research project reports. As always, if you run into trouble, let us know.
+To learn how to make more complex graphs, explore Section 3 - Data Visualisation in the online text "R for Data Science" (https://r4ds.had.co.nz/data-visualisation.html). This material covers **ggplot**, the industry-standard graphics package for R. Be prepared: The ggplot syntax is probably different from anything you have used before, and it can take a little getting used to. But be patient, because with ggplot you can produce publication-quality plots and figures that will definitely enhance your own research project reports. As always, if you run into trouble, let us know.
 
 
 # Appendix
 
-## Manual Data Entry in R
+## 1. Manual Data Entry in R
 
 For extremely small data sets, you can manually enter tabular data into R. You create a vector for each data column using the combine function `c`, and then collect those vectors into a data frame:
 
@@ -308,8 +306,8 @@ geography_df
 ```
 
 
-## Installing Packages
-When R is installed, it comes with a large set of commands, data structure, and functions which are together known as **base R**. Over the years, researchers and programmer have written thousands of additional functions and modules (called **libraries**) that you can use in your own R code. This **third-party code** is checked by moderators and, if it passes inspection, loaded onto an official R server in a file structure called a **package**. To use packages, you must first download them to your computer. They are placed in the same folders where base R was originally installed. 
+## 2. Installing Packages
+When R is installed, it comes with a large set of commands, data structures, and functions which are together known as **base R**. Over the years, researchers and programmers have written thousands of additional functions and modules (called **libraries**) that you can use in your own R code. This **third-party code** is checked by moderators and, if it passes inspection, loaded onto an official R server in a file structure called a **package**. To use packages, you must first download them to your computer. They are placed in the same folders where base R was originally installed. 
 
 To access the functions in a package in your R code, you load the package using the `library` command, as we saw above with **readr**. You only need to download a package one time on any machine, but the `library` command must be executed at the start of each RStudio session (i.e. every time you launch RStudio).
 
@@ -319,7 +317,7 @@ For example, when you want to use function `read_csv`, contained in library **re
 
 ```{r getting readr, eval = FALSE}
 
-# Download the reshape2 code to your machine
+# Download the readr code to your machine
 install.packages("readr")
 
 
@@ -329,9 +327,9 @@ library(readr)
 
 ### Tidyverse
 
-The tidyverse is a collection of packages (metapackage) that are an (opinionated) way of performing analysis in R and are all designed to operate nicely together. When `tidyverse` is installed it actually is a wrapper that installs the individual packages that make up the tidyverse core.
+The tidyverse is a collection of packages (metapackage) that offer a structured syntax for performing data preparation and basic analysis in R. Running `install.packages("tidyverse")` installs all the individual packages that make up the tidyverse core.
 
-The tidyverse consists of a core set of packages to perform common tasks in data analysis and are `ggplot2` (plotting), `dplyr` (data manipulation), `tidyr` (data tidying), `readr` (data importing), `purrr` (functional programming), `tibble` (a special type of data frame), `stringr` (common tasks for string manipulations), and  `forcats` (dealing with factors)
+The core tidyverse packages are `ggplot2` (plotting), `dplyr` (data manipulation), `tidyr` (data tidying), `readr` (data importing), `purrr` (functional programming), `tibble` (a special type of data frame), `stringr` (common tasks for string manipulations), and  `forcats` (dealing with factors)
 
 
 ```{r install tidyverse, eval = FALSE}
