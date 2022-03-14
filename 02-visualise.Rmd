@@ -95,9 +95,9 @@ When imported into R, the data from the csv file are stored in an R object calle
 
 When you call `read_csv`, passing in a file name, R reads in the file, converts it to a tibble, and displays it in the console. The columns have the same names as in the csv file. We will see later that we can use the column names to explore specific properties of our data set.
 
-R also gives you some information about how it understands the contents of the file it has imported. In the console you will see the words **Parsed with column specification:** followed by a list of the imported columns. 
+R also gives you some information about how it understands the contents of the file it has imported. In the console you will see the number of rows and columns in the imported data. You will also see the words **Column specification** followed by a list of the imported columns. 
 
-Each column header is associated with a value **col_double()**, or **col_character()**. These indicate what kind of data R identified in the input file. Columns that are **col_double** are numbers; columns that are **col_character** are strings. The same information is shown where RStudio prints the imported data. Beneath each column header you will see **dbl** for numbers and **chr** for strings. 
+Each column header is associated with a value **dbl**, or **chr**. These indicate what kind of data R identified in the input file. Columns that are **dbl** are numbers; columns that are **chr** are strings. The same information is shown where RStudio prints the imported data. Beneath each column header you will see **dbl** for numbers and **chr** for strings. 
 
 This is a good moment to pause and check that your data have been imported correctly. Data entry errors can cause R to make the wrong assumptions about your data. If you have a column of numbers that contains even one accidental alphabetic character (typos do happen) R will consider the whole column to be strings. Later, R will give the wrong results when you perform statistical analyses on these data (or it will refuse to perform them at all).   
 
@@ -234,7 +234,7 @@ paste("Mean:", round(mean(alone_only$Amount),4))
 paste("Standard deviation:", round(sd(alone_only$Amount),4))
 ```
 ### Boxplots
-We can see that the mean amount is higher for collectors who had puppies than for those who did not ($197.79 vs. $102.30). We can illustrate this difference graphically using a boxplot. 
+We can see that the mean amount is higher for collectors who had puppies than for those who did not ($197.94 vs. $105.84). We can illustrate this difference graphically using a boxplot. 
 
 The R function `boxplot` accepts two arguments. 
 
@@ -329,7 +329,7 @@ library(readr)
 
 The tidyverse is a collection of packages (metapackage) that offer a structured syntax for performing data preparation and basic analysis in R. Running `install.packages("tidyverse")` installs all the individual packages that make up the tidyverse core.
 
-The core tidyverse packages are `ggplot2` (plotting), `dplyr` (data manipulation), `tidyr` (data tidying), `readr` (data importing), `purrr` (functional programming), `tibble` (a special type of data frame), `stringr` (common tasks for string manipulations), and  `forcats` (dealing with factors)
+The core tidyverse packages are `ggplot2` (plotting), `dplyr` (data manipulation), `tidyr` (data tidying), `readr` (data importing), `purrr` (functional programming), `tibble` (a special type of data frame), `stringr` (common tasks for string manipulations), and  `forcats` (dealing with factors).
 
 
 ```{r install tidyverse, eval = FALSE}
