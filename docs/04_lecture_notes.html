@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Patricia Haden" />
+
+<meta name="date" content="2022-05-04" />
+
+<title>Module 04 Lecture Notes</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R4SSP Semester 1 2022</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modules
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Intro</li>
+    <li>
+      <a href="01-intro.html">Intro to R and RStudio</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Focus</li>
+    <li>
+      <a href="02-visualise.html">Part 1: Visualising</a>
+    </li>
+    <li>
+      <a href="03-subset.html">Part 2: Subsetting</a>
+    </li>
+    <li>
+      <a href="04-summarise.html">Part 3: Summarising</a>
+    </li>
+    <li>
+      <a href="05-transform.html">Part 4: Transforming</a>
+    </li>
+    <li>
+      <a href="06-communicate.html">Part 5: Communicating</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Programming focus</li>
+    <li>
+      <a href="07-functions.html">Functions and Choices</a>
+    </li>
+    <li>
+      <a href="08-iterate.html">Repeating Code</a>
+    </li>
+    <li>
+      <a href="09-workflows.html">Workflows</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Zoom Notes
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="zoom_notes_01.html">01 - Introducing R and RStudio</a>
+    </li>
+    <li>
+      <a href="zoom_notes_02.html">02 - Visualising data</a>
+    </li>
+    <li>
+      <a href="zoom_notes_03.html">03 - Subsetting data</a>
+    </li>
+    <li>
+      <a href="zoom_notes_04.html">04 - Summarising data</a>
+    </li>
+    <li>
+      <a href="zoom_notes_05.html">05 - Transforming data</a>
+    </li>
+    <li>
+      <a href="zoom_notes_06.html">06 - Communicating data</a>
+    </li>
+    <li>
+      <a href="zoom_notes_07.html">07 - Functions and choices</a>
+    </li>
+    <li>
+      <a href="zoom_notes_08.html">08 - Repeating code</a>
+    </li>
+    <li>
+      <a href="zoom_notes_09.html">09 - Workflows</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Module 04 Lecture Notes</h1>
+<h4 class="author">Patricia Haden</h4>
+<h4 class="date">05/04/2022</h4>
+
+</div>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>We do scientific research to test hypotheses, answer questions, or just learn something about the world. After the often labourious process of data collection, we may have hundreds (or even thousands) of data points, but we haven’t actually learned anything. To squeeze the knowledge out of our raw data, we must use statistics.</p>
+<p>The formal topic of statistics is large and complex, and we do not attempt to teach it here (there are papers for that, and we recommend you take as many of them as possible). We concentrate on how to use R to perform common statistical analyses. R is especially useful for such tasks because of its extensive set of statistical libraries and efficient data handling facilities.</p>
+<p>There are two general types of statistical analyses – descriptive statistics, which allow us to summarise and describe our raw data, and inferential statistics, which allow us to generalise our results beyond our observed data. We will only cover descriptive statistics in R4SSP.</p>
+<p>For this module, we will use two data sets – the Palmers Penguins data we have seen previously, and a data set containing Chlorophyll A (ChlA) readings from three New Zealand lakes (data provided by the local Regional Councils). ChlA levels are an indicator of phytoplankton biomass, and provide a general measure of lake health – more ChlA indicates poorer health. The “toxic algal blooms” that occur occasionally in New Zealand lakes are accompanied by a dramatic spike in measured ChlA.</p>
+</div>
+<div id="loading-the-data" class="section level1">
+<h1>Loading the data</h1>
+<pre class="r"><code>#===============================================
+# The Penguin Data:
+#===============================================
+
+# Install palmerpenguins once on any computer
+
+# install.packages(&quot;palmerspenguins&quot;)
+
+# After loading the library, a tibble
+# called &#39;penguins&#39; will be initialised
+library(palmerpenguins)
+
+# Check the structure
+str(penguins)</code></pre>
+<pre><code>## tibble [344 x 8] (S3: tbl_df/tbl/data.frame)
+##  $ species          : Factor w/ 3 levels &quot;Adelie&quot;,&quot;Chinstrap&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ island           : Factor w/ 3 levels &quot;Biscoe&quot;,&quot;Dream&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ bill_length_mm   : num [1:344] 39.1 39.5 40.3 NA 36.7 39.3 38.9 39.2 34.1 42 ...
+##  $ bill_depth_mm    : num [1:344] 18.7 17.4 18 NA 19.3 20.6 17.8 19.6 18.1 20.2 ...
+##  $ flipper_length_mm: int [1:344] 181 186 195 NA 193 190 181 195 193 190 ...
+##  $ body_mass_g      : int [1:344] 3750 3800 3250 NA 3450 3650 3625 4675 3475 4250 ...
+##  $ sex              : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 1 1 NA 1 2 1 2 NA NA ...
+##  $ year             : int [1:344] 2007 2007 2007 2007 2007 2007 2007 2007 2007 2007 ...</code></pre>
+<pre class="r"><code>#===============================================
+# The Lake Data:
+#===============================================
+
+# Read in the lakes data file, parsing the lake 
+# name column as a factor
+lakes &lt;- read.csv(&quot;data/NZ_lake_chla_data.csv&quot;, stringsAsFactors = TRUE)
+
+# Since they are conceptually categorical in this data set, 
+# you may wish to cast Year and Month to factors as well, for completeness...
+lakes$Year &lt;- as.factor(lakes$Year)
+lakes$Month &lt;- as.factor(lakes$Month)  
+
+# Check the structure
+str(lakes)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    408 obs. of  4 variables:
+##  $ LakeName: Factor w/ 3 levels &quot;Lake Ellesmere&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Year    : Factor w/ 13 levels &quot;2001&quot;,&quot;2002&quot;,..: 4 4 4 4 4 4 4 4 4 4 ...
+##  $ Month   : Factor w/ 12 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ ChlA    : num  66.9 79.9 95 82.4 59.6 69 62.1 96.3 135 102 ...</code></pre>
+</div>
+<div id="visualise-the-data-revision" class="section level1">
+<h1>Visualise the data (revision)</h1>
+<p>When faced with a new data set, my first step is invariably to start making graphs. These “pictures” of your data provide an easy way to see large-scale patterns that will help guide your further analysis. They also help you to catch any problems in your data (see the skewness exercise in the Zoom Notes for this module) that must be addressed before proceeding to more complex analyses.</p>
+<p>An excellent first graph for continuous (i.e. not categorical) data is the <strong>frequency distribution</strong>, or <strong>histogram</strong>, which has data value on the x-axis and frequency (i.e. count or proportion) on the y-axis. This shows you, in a single picture, how your data are distributed. We met the histogram in Module 02.</p>
+<p>The <code>penguins</code> data set contains values for 344 different penguins. We can begin by looking at how the penguins’ body weights are distributed.</p>
+<div id="histogram-with-base-r" class="section level2">
+<h2>Histogram with base R</h2>
+<pre class="r"><code># The &#39;breaks&#39; argument controls the number of bars drawn
+hist(penguins$body_mass_g, 
+     breaks = 100,
+     main=&quot;Distribution of Penguin Body Mass&quot;, xlab = &quot;Body mass (g)&quot;, ylab = &quot;Frequency&quot;)</code></pre>
+<p><img src="04_lecture_notes_files/figure-html/04-histograms-1.png" width="672" /></p>
+</div>
+<div id="histogram-with-ggplot" class="section level2">
+<h2>Histogram with ggplot</h2>
+<pre class="r"><code># Load the library before your first call to ggplot
+library(ggplot2)
+
+# The values provided to &#39;colour&#39; and &#39;fill&#39; are hexidecimal colour codes. Note the 
+# hash mark prefix. It is required.
+ggplot(data = penguins, mapping = aes(x = body_mass_g)) +
+  geom_histogram(colour = &quot;#7133ff&quot;, fill=&quot;#bbbbff&quot;) +
+  labs(title = &quot;Distribution of Penguin Body Mass&quot;, 
+       x = &quot;Body Mass (g)&quot;, 
+       y = &quot;Frequency&quot;) + theme_bw()</code></pre>
+<p><img src="04_lecture_notes_files/figure-html/ggplot%20histo,%20-1.png" width="672" /></p>
+</div>
+<div id="illustrating-groups" class="section level2">
+<h2>Illustrating Groups</h2>
+<p>Using ggplot, we can illustrate group effects in histograms by defining a mapping from a grouping (i.e. categorical) variable to the <code>fill</code> property of function <code>geom_histogram</code>. For example, the code below will make histograms of all the ChlA values in data frame <code>lakes</code>, with each lake in a different colour</p>
+<p>By default, geom_histogram produces a stacked plot – that is, the different groups are shown stacked up in a single bar, separated by their colour. To make the plot with side-by-side bars, set geom_histogram’s <code>position</code> argument to <code>dodge</code>. Note that this is not a mapping, it is simply an argument to function geom_histogram. What does this simple graph tell you about the health of these three lakes?</p>
+<div id="for-continuous-data" class="section level3">
+<h3>For continuous data</h3>
+<pre class="r"><code># Stacked grouped histogram
+ggplot(data = lakes, mapping = aes(x = ChlA)) +
+  geom_histogram(aes(fill=LakeName), colour = &#39;black&#39;)</code></pre>
+<p><img src="04_lecture_notes_files/figure-html/04-lake_hists-1.png" width="672" /></p>
+<pre class="r"><code># Side-by-side grouped histogram
+ggplot(data = lakes, mapping = aes(x = ChlA)) +
+  geom_histogram(aes(fill=LakeName), colour = &#39;black&#39;, position=&quot;dodge&quot;)</code></pre>
+<p><img src="04_lecture_notes_files/figure-html/04-lake_hists-2.png" width="672" /></p>
+</div>
+<div id="for-categorical-data" class="section level3">
+<h3>For categorical data</h3>
+<p>The functions <code>hist</code> and <code>geom_histogram</code> are appropriate for <strong>continuous</strong> (numerical) data. For <strong>categorical</strong> variables (e.g. Species and Island in the penguin data set) one often uses the more general <code>geom_bar</code> function (geom_histogram is a special case of geom_bar). The example code below shows how to generate a bar graph in ggplot, modifying the default ggplot colour palette to something more accessible to viewers with atypical colour vision:</p>
+<pre class="r"><code># &quot;Colour-blind friendly&quot; palette from #https://personal.sron.nl/~pault/
+# These are hexadecimal colour codes. The # is required.
+customPalette &lt;- c(&quot;#DDAA33&quot;, &quot;#BB5566&quot;, &quot;#004488&quot;)
+
+# Generate a stacked bar plot, and use our custom colour palette
+ggplot(data = penguins, mapping = aes(x = island, fill=species)) +
+  geom_bar() +
+  scale_fill_manual(values = customPalette)</code></pre>
+<p><img src="04_lecture_notes_files/figure-html/04-categorical_distribution-1.png" width="672" /></p>
+<p>As with geom_histogram above, we set the position argument of geom_bar to change from stacked to side-by-side format.</p>
+<p><img src="04_lecture_notes_files/figure-html/04-categorical_distribution_dodge-1.png" width="672" /></p>
+<p>Even a simple graph like this helps you to get to know your data. Just by inspection we see that Biscoe island has the largest population, Torgersen has only Adelie penguins, Dream Island has nearly equal numbers of Chinstrap and Gentoo, etc. When first approaching a big data set, always think about starting with some graphs.</p>
+</div>
+</div>
+</div>
+<div id="measures-of-central-tendency" class="section level1">
+<h1>Measures of Central Tendency</h1>
+<p>Look at the graph you made earlier showing the distributions of ChlA for the three lakes. You might describe the Lake Ellesmere ChlA readings as “mostly between 50 and 100” and the Lake Rotorua readings as “mostly around 10”. Statements like this are attempts to describe a <strong>typical</strong> score from a large data set. They allow us to capture the fact that, for example, <em>overall</em>, Lake Ellesmere has higher ChlA readings than Lake Rotorua. It is not the case that <em>every</em> Ellesmere reading is higher than <em>every</em> Rotorua reading, but <strong>typically</strong> this is the case.</p>
+<p>In statistics, a precise measure of such typicality is called a <strong>Measure of Central Tendency</strong> (MCT). The most common MCTs are the <strong>mean</strong>, the <strong>median</strong> and the <strong>mode</strong>. These are, respectively, the mathematical average, the middle score, and the most frequent score (or scores) in a data set. There are some subtle statistical issues around which of the three MCT is appropriate for any given data analysis situation (ask your lecturer for details), but they are all easy to compute in R (we have, in fact, already met function <code>mean</code> in earlier modules), and we show example code below for computing these descriptive statistics on a single column of data from the penguins data set.</p>
+<p>Note that the penguins data has some missing some values (cf. Module 03 - Subsetting), The functions for mean and median will not work if the input data have any <code>NA</code> (missing) values. The most common solution is to omit those scores from the computation by setting the <code>na.rm</code> argument to <code>TRUE</code> as shown:</p>
+<div id="mean" class="section level2">
+<h2>Mean</h2>
+<pre class="r"><code># We have seen this code before... We pass the column of interest
+# to function mean
+mean(penguins$body_mass_g, na.rm=TRUE)</code></pre>
+<pre><code>## [1] 4201.754</code></pre>
+</div>
+<div id="median" class="section level2">
+<h2>Median</h2>
+<pre class="r"><code># The familiar pattern....
+median(penguins$body_mass_g, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 4050</code></pre>
+</div>
+<div id="mode" class="section level2">
+<h2>Mode</h2>
+<p>Base R has no built-in function for mode. After Module 08 you will be able to write your own Mode function. Or you can use one of several available in auxiliary libraries. The DescTools library is a good one.</p>
+<pre class="r"><code># Install the package once on each machine
+# install.packages(&quot;DescTools&quot;)
+
+# Load the library once each session
+library(DescTools)
+
+#Call the function
+Mode(penguins$body_mass_g, na.rm=TRUE)</code></pre>
+<pre><code>## [1] 3800
+## attr(,&quot;freq&quot;)
+## [1] 12</code></pre>
+<p>Note that DescTools::Mode returns the modal (i.e. most common value) with an attached <strong>attribute</strong> called “freq” equal to the number of occurences.</p>
+</div>
+<div id="using-function-summary" class="section level2">
+<h2>Using function <code>summary</code></h2>
+<p>When you have a very large number of data measures, you may wish to compute MCTs for individual columns as shown above. An efficient alternative for smaller data sets is to use function <code>summary</code>, which accepts a data frame and summarises <em>all</em> its columns at once. Function <code>summary</code> computes frequencies for categorical variables, and measures of central tendency for continuous variables. It also reports the numbers of NA values in each column. Function <code>summary</code> provides some additional measures (minimum, 1st quartile, 3rd quartile, and maximum) that we will discuss in more detail later.</p>
+<pre class="r"><code>summary(penguins)</code></pre>
+<pre><code>##       species          island    bill_length_mm  bill_depth_mm  
+##  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
+##  Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
+##  Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
+##                                  Mean   :43.92   Mean   :17.15  
+##                                  3rd Qu.:48.50   3rd Qu.:18.70  
+##                                  Max.   :59.60   Max.   :21.50  
+##                                  NA&#39;s   :2       NA&#39;s   :2      
+##  flipper_length_mm  body_mass_g       sex           year     
+##  Min.   :172.0     Min.   :2700   female:165   Min.   :2007  
+##  1st Qu.:190.0     1st Qu.:3550   male  :168   1st Qu.:2007  
+##  Median :197.0     Median :4050   NA&#39;s  : 11   Median :2008  
+##  Mean   :200.9     Mean   :4202                Mean   :2008  
+##  3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  
+##  Max.   :231.0     Max.   :6300                Max.   :2009  
+##  NA&#39;s   :2         NA&#39;s   :2</code></pre>
+<div id="exercise" class="section level3">
+<h3>Exercise</h3>
+<p>The results for column <code>year</code> may not be what you expected. Function <code>summary</code> has computed an <em>average value</em> for <code>year</code>. Does this seem like the appropriate analysis? (Answer =&gt; No.) Modify <code>penguins</code> to make <code>summary</code> treat the <code>year</code> data correctly, and rerun <code>summary</code>.</p>
+</div>
+</div>
+</div>
+<div id="measures-of-variability" class="section level1">
+<h1>Measures of Variability</h1>
+<p>In the histograms for ChlA from each of three New Zealand lakes, the three groups of scores did not overlap completely, indicating that the typical values – the central tendencies – were different for the three lakes. We can confirm this observation by comparing the means. We can use function <code>aggregate</code> in base R, or <code>group_by</code> and <code>summarise</code>, from library dplyr.</p>
+<div id="using-aggregate" class="section level3">
+<h3>Using <code>aggregate</code></h3>
+<pre class="r"><code># Using aggregate. compute the group means
+aggregate(lakes$ChlA, by = list(Lake = lakes$LakeName), FUN=mean)</code></pre>
+<pre><code>##             Lake         x
+## 1 Lake Ellesmere 80.566667
+## 2   Lake Rotorua 18.419015
+## 3     Lake Taupo  1.030606</code></pre>
+</div>
+<div id="using-group_by-and-summarise" class="section level3">
+<h3>Using <code>group_by</code> and <code>summarise</code></h3>
+<pre class="r"><code># Using `group_by` and `summarise`
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>lakes %&gt;% 
+  group_by(LakeName) %&gt;%
+  summarise(MeanChlA = mean(ChlA))</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   LakeName       MeanChlA
+##   &lt;fct&gt;             &lt;dbl&gt;
+## 1 Lake Ellesmere    80.6 
+## 2 Lake Rotorua      18.4 
+## 3 Lake Taupo         1.03</code></pre>
+<p>However, not only do the central points of the three lakes’ distributions differ, so do the amounts of “spread”. Lake Taupo’s distribution is very “skinny”; all its readings are similar. Lake Ellesmere is squashed and spread out; its readings vary a lot. Lake Rotorua is intermediate. To illustrate this more clearly, we can use ggplot to make separate graphs for each lake, using function <code>facet_grid</code>.</p>
+<p>Note the <code>scales</code> argument to <code>facet_grid</code>. This allows each graph to adjust its y-axis to its data domain, which makes the comparison visually easier; this should be mentioned in the discussion of the figure in a manuscript.</p>
+</div>
+<div id="using-facet_grid" class="section level2">
+<h2>Using <code>facet_grid</code></h2>
+<pre class="r"><code>ggplot(data = lakes) +
+  geom_histogram(aes(x = ChlA, fill=LakeName), color=&quot;black&quot;) +
+  facet_grid(rows = vars(LakeName), scales=&quot;free_y&quot;)</code></pre>
+<p><img src="04_lecture_notes_files/figure-html/facet_graphs-1.png" width="672" /></p>
+<p>Statistically, the “spread out” quality of a distribution reflects its <strong>variability</strong>.</p>
+<p>We can capture variability more precisely with measures of the <strong>range</strong> of the data set. These are typically the smallest and largest scores (minimum and maximum) and the scores at the 25th and 75th percentiles (also called <strong>1st quartile</strong> and <strong>3rd quartile</strong>). Earlier, we saw that function <code>summary</code> computes these measures of range. However, if we simply pass the entire <code>lakes</code> data frame to function <code>summary</code>, it will combine the data from all three lakes – to compare the lakes we need the values from each lake separately.</p>
+<p>In earlier modules we have seen two techniques for selecting out just the rows from one lake (using [] or using <code>filter</code>). To run function <code>summary</code> on each lake separately, we could select the subset for each lake in turn, and pass each subset to <code>summary</code>. However, we can achieve the same result more parsimoniously by using function <code>aggregate</code>. Above we used aggregate with <code>FUN = mean</code> to get the mean ChlA for each lake. We can use <code>FUN = summary</code> to call function <code>summary</code> separately for the records of each lake.</p>
+<pre class="r"><code># Apply function summary by group
+aggregate(lakes$ChlA, by = list(Lake = lakes$LakeName), FUN=summary)</code></pre>
+<pre><code>##             Lake     x.Min.  x.1st Qu.   x.Median     x.Mean  x.3rd Qu.
+## 1 Lake Ellesmere   1.300000  44.000000  67.950000  80.566667  97.087500
+## 2   Lake Rotorua   2.500000  10.825000  15.950000  18.419015  23.625000
+## 3     Lake Taupo   0.200000   0.600000   0.900000   1.030606   1.400000
+##       x.Max.
+## 1 521.300000
+## 2  77.100000
+## 3   2.900000</code></pre>
+<p>We can also measure the variablity in a data set with the <strong>standard deviation</strong>. The standard deviation is the most commonly used measure of variability, and it plays an important mathematical role in inferential statistics (ask your stats lecturer for details – it’s very interesting). Conceptually, the standard deviation is <em>almost</em> equal to the average distance from the mean across all the values in a data set – it doesn’t equal <em>exactly</em> that value, because of how it is computed, but it is close, and it can be helpful to think of it with this approximation. Big standard deviation shows that scores are spread far from their mean; small standard deviation shows that scores tend to huddle close to their mean. Compute standard deviation with function <code>sd</code>.</p>
+<div id="using-aggregate-1" class="section level3">
+<h3>Using <code>aggregate</code></h3>
+<pre class="r"><code># Using aggregate. compute the group sds
+aggregate(lakes$ChlA, by = list(Lake = lakes$LakeName), FUN=sd)</code></pre>
+<pre><code>##             Lake          x
+## 1 Lake Ellesmere 63.5217194
+## 2   Lake Rotorua 11.6637583
+## 3     Lake Taupo  0.5627233</code></pre>
+</div>
+<div id="using-group_by-and-summarise-1" class="section level3">
+<h3>Using <code>group_by</code> and <code>summarise</code></h3>
+<pre class="r"><code>lakes %&gt;% 
+  group_by(LakeName) %&gt;%
+  summarise(StdDev = sd(ChlA))</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   LakeName       StdDev
+##   &lt;fct&gt;           &lt;dbl&gt;
+## 1 Lake Ellesmere 63.5  
+## 2 Lake Rotorua   11.7  
+## 3 Lake Taupo      0.563</code></pre>
+<p>The histograms, the measures of range, and the standard deviations all indicate that Taupo has very stable ChlA measures, Rotorua is a little noisier, and Ellesmere is all over the place. This phytoplankton biomass stability is an important indicator of lake health – a stable lake is at much lower risk of a toxic algal bloom.</p>
+</div>
+</div>
+</div>
+<div id="efficient-code-for-descriptive-statistics" class="section level1">
+<h1>Efficient code for descriptive statistics</h1>
+<p>The function <code>describeBy</code> in package <code>psych</code> will compute all the descriptive summaries we have seen (and a few more) in one statement. When you are exploring a single data column and a single grouping column (so the output doesn’t get too large), this is a very useful function.</p>
+<pre class="r"><code># Install once on any computer
+#install.packages(&quot;psych&quot;)
+
+# Call once each R session
+library(psych)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;psych&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:DescTools&#39;:
+## 
+##     AUC, ICC, SD</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     %+%, alpha</code></pre>
+<pre class="r"><code># Pass in the data column and the grouping column
+describeBy(lakes$ChlA, lakes$LakeName)</code></pre>
+<pre><code>## 
+##  Descriptive statistics by group 
+## group: Lake Ellesmere
+##    vars   n  mean    sd median trimmed  mad min   max range skew kurtosis  se
+## X1    1 120 80.57 63.52  67.95   72.45 40.7 1.3 521.3   520 3.12     17.5 5.8
+## ------------------------------------------------------------ 
+## group: Lake Rotorua
+##    vars   n  mean    sd median trimmed  mad min  max range skew kurtosis   se
+## X1    1 132 18.42 11.66  15.95   16.97 9.12 2.5 77.1  74.6 1.71     4.75 1.02
+## ------------------------------------------------------------ 
+## group: Lake Taupo
+##    vars   n mean   sd median trimmed  mad min max range skew kurtosis   se
+## X1    1 156 1.03 0.56    0.9    0.97 0.56 0.2 2.9   2.7 0.97      0.5 0.05</code></pre>
+<p>Package <code>psych</code> contains many other interesting statistical tools, especially for multivariate data sets commonly found in psychological and ecological research. Ask Google or your lecturer for details.</p>
+</div>
+<div id="exploring-the-relationship-between-two-variables" class="section level1">
+<h1>Exploring the relationship between two variables</h1>
+<p>The preceding descriptive statistics all looked at data measures – ChlA, bill length, body weight, etc. – individually, summarising their distribution, central tendency and variability. Often, however, we are interested in describing <strong>the relationship between data measures</strong>. For example, we might want to know if heavier penguins also tend to have longer bills. This type of relationship is called a <strong>correlation</strong>. When we have more than one measure for each experimental participant (or each penguin, or each lake) we can explore correlations between pairs of measures graphically with a <strong>scatterplot</strong>. A scatterplot has one measure on each axis, and one point for each participant’s pair of scores.</p>
+<p>In the code example below we make a scatterplot with ggplot (cf. Module 02), and show how to add a <strong>linear trend line</strong>. Conceptually, this is the line that runs through the center of the scatterplot points, and it helps us to see the direction of the relationship. Mathematically, trend lines are actually very complicated things, and we generate them with the powerful function <code>lm</code>,(for <strong>linear model</strong>). You will learn about the many fascinating things you can do with linear modeling if you take advanced statistics papers.</p>
+<div id="scatterplot-with-linear-trend-line" class="section level2">
+<h2>Scatterplot with linear trend line</h2>
+<pre class="r"><code># geom_point plots the points of the scatterplot 
+
+# geom_smooth plots the linear trend line computed with function lm
+
+# The se argument determines whether error bars are shown 
+# around the trend line.
+
+ggplot(data = penguins, mapping = aes(x = body_mass_g, y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se=FALSE)</code></pre>
+<p><img src="04_lecture_notes_files/figure-html/04-scatterplot-1.png" width="672" /></p>
+<p>The scatterplot gives us a very clear picture: those penguins with higher body weights tend to also have longer bills, and this is reflected in the positive slope of the trendline. Note however that this is not an absolute rule. Is it easy to find pairs of points such that the lighter of two penguins has the longer bill. This is typical of correlational data.</p>
+<p>There are various statistical measures that capture the strength of a correlation (i.e. how close it is to being an absolute rule). For continuous, numerical data (such as bill length and body weight) use the R function <code>cor</code> to compute the numerical correlation value. As with means and medians, we must tell <code>cor</code> how to cope with missing data (NA scores). Unfortunately the syntax is not consistent across the functions. For function <code>mean</code> we set argument <code>na.rm = TRUE</code>. For function <code>cor</code> we must set argument <code>use = "complete.obs"</code>, meaning that we want the function to use only those rows that are complete (i.e. have both values). These idiosyncracies occur from time to time in R; you just have to learn them.</p>
+</div>
+<div id="correlation-coefficient" class="section level2">
+<h2>Correlation coefficient</h2>
+<pre class="r"><code># Pass the two data columns into function cor
+cor(penguins$bill_length_mm, penguins$body_mass_g, use=&quot;complete.obs&quot;)</code></pre>
+<pre><code>## [1] 0.5951098</code></pre>
+<p>Function <code>cor</code> returns a value between -1 and 1. Correlations that trend downward (i.e. if one score is high, the other tends to be low) will have a negative correlation value. Correlations that trend upward (i.e. if one score is high the other also tends to be high) will have a positive correlation value. The closer the absolute value of <code>cor</code> is to 1, the stronger the correlation (you know who to talk to for more detail, don’t you?).</p>
+<p>For example, consider these two scatterplots:</p>
+<p><img src="04_lecture_notes_files/figure-html/04-comparing-1.png" width="672" /></p>
+</div>
+<div id="exercise-1" class="section level2">
+<h2>Exercise</h2>
+<p>For one of the scatterplots above, the computed correlation score is 0.60. For the other, it is 0.87. First, predict which is which. Second, write the necessary R code to confirm your prediction.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
