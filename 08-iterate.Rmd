@@ -463,4 +463,36 @@ Next week we conclude the formal content of R4SSP with a discussion of R workflo
 
 Please fill in the module feedback form [https://tinyurl.com/r4ssp-module-fb](https://tinyurl.com/r4ssp-module-fb).
 
- 
+
+```{r temp while}
+
+animals <- c("Antelope", "Bison", "Cat")
+
+length_vector <- c()
+
+for (a in animals)
+{
+  # Call nchar on each element in the loop sequence
+  length_vector <- c(length_vector, nchar(a))
+}
+
+length_vector
+
+
+length_list <- lapply(animals, nchar)
+
+library(purrr)
+length_list <- map(animals, nchar)
+
+
+
+
+
+
+```
+
+
+
+
+
+
